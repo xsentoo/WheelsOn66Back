@@ -5,7 +5,8 @@ const Destination = require('../models/Destination');
 dotenv.config();
 
 const destinations = [
-  { name: "Route 66", description: "Un road trip mythique à travers les États-Unis" },
+  { name: "États-Unis'", description: "Une pays magnifique" },
+  { name: "Route 66", description: "Un road trip mythique à travers les États-Unis"  ,backgroundImageUrl: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1200&q=80"},
   { name: "Sri Lanka", description: "Une île tropicale magnifique" },
   { name: "Las Vegas", description: "La ville du divertissement" },
   { name: "Maroc", description: "Entre désert, montagnes et culture" },

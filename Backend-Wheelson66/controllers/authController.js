@@ -2,20 +2,24 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+// Inscription utilisateur
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
-
   try {
+    // Vérifie si l'email existe déjà
     const exist = await User.findOne({ email });
     if (exist) return res.status(400).json({ message: 'Email déjà utilisé' });
 
+    // Hash du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashedPassword });
 
+    // Génère un token JWT
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 
+    // Réponse
     res.status(201).json({
       message: 'Utilisateur créé',
       token,
@@ -30,20 +34,23 @@ exports.register = async (req, res) => {
   }
 };
 
+// Connexion utilisateur
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Email invalide' });
 
+    // Vérifie le mot de passe
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Mot de passe incorrect' });
 
+    // Génère un token JWT
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 
+    // Réponse
     res.json({
       token,
       user: {

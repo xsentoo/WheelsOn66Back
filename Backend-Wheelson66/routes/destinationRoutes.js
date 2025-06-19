@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Destination = require('../models/Destination');
 
+// GET /api/destinations — Liste toutes les destinations
 router.get('/', async (req, res) => {
   try {
     const destinations = await Destination.find();
