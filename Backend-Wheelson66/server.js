@@ -14,13 +14,14 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Routes API (toutes tes routes)
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/home', require('./routes/homeRoutes'));
 app.use('/api/trips', require('./routes/tripRoutes'));
 app.use('/api/items', require('./routes/itemRoutes'));
 app.use('/api/destinations', require('./routes/destinationRoutes'));
 app.use('/api/roadtrips', require('./routes/roadTripRoutes'));
+app.use('/api/user', require('./routes/userRoutes')); // <-- LIGNE OBLIGATOIRE pour le profil
 
 // Lancement du serveur
 const PORT = process.env.PORT || 5001;

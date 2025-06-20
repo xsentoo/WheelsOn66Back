@@ -90,3 +90,19 @@ exports.getLatestTrip = async (req, res) => {
     res.status(500).json({ message: 'Erreur récupération voyage', error: err.message });
   }
 };
+// ...toutes tes fonctions existantes
+
+// Ajoute à la fin :
+exports.updateTripStory = async (req, res) => {
+  try {
+    const { tripId, story } = req.body;
+    const Trip = require('../models/Trip');
+    const trip = await Trip.findOne({ _id: tripId, user: req.user.id });
+    if (!trip) return res.status(404).json({ message: "Trip introuvable" });
+    trip.story = story || "";
+    await trip.save();
+    res.json({ message: "Histoire enregistrée", trip });
+  } catch (err) {
+    res.status(500).json({ message: "Erreur update story", error: err.message });
+  }
+};

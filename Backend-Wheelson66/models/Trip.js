@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Sous-schéma pour les items du voyage
 const itemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   quantity: { type: Number, default: 1 },
@@ -24,7 +23,8 @@ const tripSchema = new mongoose.Schema({
   items: [itemSchema],
   totalBudget: { type: Number, default: 0 },
   roadTripId: { type: mongoose.Schema.Types.ObjectId, ref: 'RoadTrip' },
-  customStops: [stopSchema], // <-- ici le champ pour les étapes personnalisées
+  customStops: [stopSchema],
+  story: { type: String, default: "" }, // <-- pour l’histoire utilisateur
 }, { timestamps: true });
 
 module.exports = mongoose.model('Trip', tripSchema);

@@ -63,3 +63,42 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
+
+// Modifier email et/ou mot de passe utilisateur
+exports.updateProfile = async (req, res) => {
+  const userId = req.user.id;
+  const { email, oldPassword, newPassword } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "Utilisateur introuvable" });
+
+    // Si changement d'email
+    if (email && email !== user.email) {
+      // Vérifie si l'email est déjà pris
+      const exists = await User.findOne({ email });
+      if (exists) return res.status(400).json({ message: "Cet email est déjà utilisé." });
+      user.email = email;
+    }
+
+    // Si changement de mot de passe
+    if (oldPassword && newPassword) {
+      const match = await bcrypt.compare(oldPassword, user.password);
+      if (!match) return res.status(400).json({ message: "Ancien mot de passe incorrect" });
+      if (newPassword.length < 6) return res.status(400).json({ message: "Le nouveau mot de passe doit faire au moins 6 caractères." });
+      user.password = await bcrypt.hash(newPassword, 10);
+    }
+
+    await user.save();
+    res.json({
+      message: "Profil mis à jour avec succès",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Erreur serveur", error: err.message });
+  }
+};
