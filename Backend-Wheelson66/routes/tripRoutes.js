@@ -121,5 +121,15 @@ router.get('/all', authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 });
+// ✅ Supprimer un voyage par son ID
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const trip = await Trip.findOneAndDelete({ _id: req.params.id, user: req.user.id });
+    if (!trip) return res.status(404).json({ message: "Voyage non trouvé" });
+    res.json({ success: true, message: "Voyage supprimé" });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error: error.message });
+  }
+});
 
 module.exports = router;

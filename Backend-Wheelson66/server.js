@@ -14,17 +14,17 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// Routes API (toutes tes routes)
+// Routes API
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/home', require('./routes/homeRoutes'));
 app.use('/api/trips', require('./routes/tripRoutes'));
 app.use('/api/items', require('./routes/itemRoutes'));
 app.use('/api/destinations', require('./routes/destinationRoutes'));
 app.use('/api/roadtrips', require('./routes/roadTripRoutes'));
-app.use('/api/user', require('./routes/userRoutes')); // <-- LIGNE OBLIGATOIRE pour le profil
+app.use('/api/user', require('./routes/userRoutes')); // Pour le profil utilisateur
 
-// Lancement du serveur
+// Lancement du serveur sur 0.0.0.0 pour accepter les connexions extérieures
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
