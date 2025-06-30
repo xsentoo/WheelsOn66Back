@@ -11,11 +11,12 @@ const stopSchema = new mongoose.Schema({
 }, { _id: false });
 
 const roadTripSchema = new mongoose.Schema({
-  destination:  { type: String, required: true }, // ex: "États-Unis"
-  name:         { type: String, required: true }, // ex: "Route 66"
+  destination:  { type: String, required: true },
+  name:         { type: String, required: true },
   description:  String,
-  mapImageUrl:  String,                           // Image globale de la route
-  stops:        [stopSchema]                      // Étapes/arrêts sur la route
+  mapImageUrl:  String,
+  stops:        [stopSchema],
+  items:        [String] // <-- Ajouté ici
 });
 
 module.exports = mongoose.model('RoadTrip', roadTripSchema);

@@ -20,7 +20,8 @@ app.use('/api/home', require('./routes/homeRoutes'));
 app.use('/api/trips', require('./routes/tripRoutes'));
 app.use('/api/items', require('./routes/itemRoutes'));
 app.use('/api/destinations', require('./routes/destinationRoutes'));
-app.use('/api/roadtrips', require('./routes/roadTripRoutes'));
+const roadTripRoutes = require('./routes/roadTripRoutes');
+app.use('/api/roadtrips', roadTripRoutes);
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/user', require('./routes/userRoutes')); // Pour le profil utilisateur
 
