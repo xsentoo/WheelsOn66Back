@@ -21,6 +21,7 @@ app.use('/api/trips', require('./routes/tripRoutes'));
 app.use('/api/items', require('./routes/itemRoutes'));
 app.use('/api/destinations', require('./routes/destinationRoutes'));
 app.use('/api/roadtrips', require('./routes/roadTripRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/user', require('./routes/userRoutes')); // Pour le profil utilisateur
 
 // Lancement du serveur sur 0.0.0.0 pour accepter les connexions extérieures
