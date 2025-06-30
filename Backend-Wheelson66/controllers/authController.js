@@ -41,6 +41,8 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Email invalide' });
 
+    if (user.isBlocked) return res.status(403).json({ message: 'Compte bloqué' }); // <-- ajoute cette ligne
+
     // Vérifie le mot de passe
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Mot de passe incorrect' });
@@ -56,7 +58,8 @@ exports.login = async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        isAdmin: user.isAdmin // <-- ajoute cette ligne
       }
     });
   } catch (err) {
